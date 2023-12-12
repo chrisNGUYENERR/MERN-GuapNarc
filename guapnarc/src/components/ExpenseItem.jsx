@@ -12,7 +12,6 @@ const Container = styled.div`
         flex-direction: row;
         height: 2rem;
         align-items: center;
-        border-bottom: 1px solid black;
         .name {
             width: 60%;
         }

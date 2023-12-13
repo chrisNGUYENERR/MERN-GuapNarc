@@ -12,6 +12,11 @@ const Container = styled.div`
         flex-direction: row;
         height: 2rem;
         align-items: center;
+        background-color: rgba(255,255,255,0.07);
+        padding: 0 0.5rem;
+        border-radius: 3px;
+        font-weight: 100;
+        margin-bottom: 0.5rem;
         .name {
             width: 60%;
         }

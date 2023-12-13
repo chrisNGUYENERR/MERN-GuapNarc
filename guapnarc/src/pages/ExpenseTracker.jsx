@@ -64,6 +64,10 @@ const Container = styled.div`
         border: 2px solid rgba(255,255,255,0.1);
         box-shadow: 0 0 40px rgba(8,7,16,0.6);
         padding: 1rem;
+        .expenseList {
+            margin: 2rem 0;
+            overflow-y: scroll;
+        }
     }
 `;
 
@@ -78,7 +82,9 @@ export default function ExpenseTracker() {
         <div className="expenseModule">
             <div className='content'>
                 <Budget />
-                <ExpenseList />
+                <div className='expenseList'>
+                    <ExpenseList />
+                </div>
                 <AddExpenseForm />
             </div>
         </div>

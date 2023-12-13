@@ -5,6 +5,7 @@ import styled from 'styled-components';
 const Form = styled.form`
     display: flex;
     flex-direction: column;
+    border-top: 4px solid black;
     .btmFormLine {
         display: flex;
         justify-content: space-between;
@@ -24,7 +25,7 @@ const Form = styled.form`
         height: 40px;
         background-color: rgba(255,255,255,0.07);
         border-radius: 3px;
-        padding: 0 10px;
+        padding: 0 0.5rem;
         margin-top: 8px;
         font-size: 14px;
         font-weight: 300

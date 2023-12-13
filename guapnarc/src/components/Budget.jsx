@@ -19,7 +19,11 @@ function Budget(props) {
     <Container>
         <div className="budget">
             Budget:
-            <span>${ budget }</span>
+            <span 
+                className='amount'
+            >
+                ${ budget }
+            </span>
         </div>
     </Container>
   )

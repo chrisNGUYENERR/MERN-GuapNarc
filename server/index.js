@@ -1,14 +1,15 @@
 const express = require('express');
 const app = express();
-const cors = require('cors');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const port = 1337;
+const cors = require('cors');
+// const userRoute = require('./routes/user');
+const authRoute = require('./routes/auth');
 
 app.use(cors());
 app.use(express.json());
-
-dotenv.config()
+dotenv.config();
 
 mongoose
     .connect(process.env.MONGO_URL)
@@ -18,9 +19,12 @@ mongoose
     });
 
 
-app.get('/', (req, res) => {
-    res.send('Welcome to my server!');
-});
+// app.get('/', (req, res) => {
+//     res.send('Welcome to my server!');
+// });
+
+
+app.use('/api/auth', authRoute);
 
 
 

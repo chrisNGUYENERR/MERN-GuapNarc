@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { FaFacebook, FaGoogle, FaRegEye, FaRegEyeSlash, FaCheck } from 'react-icons/fa';
 import Modal from 'react-modal';
 import TermsAgreement from '../components/TermsAgreement';
 import '../styles.css';
-import { Link, useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
     height: 100vh;
@@ -227,6 +228,7 @@ const modalStyles = {
 export default function Register() {
 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const [userInfo, setUserInfo] = useState({
         firstName: '',
@@ -274,8 +276,18 @@ export default function Register() {
 
     const handleRegisterBtn = (e) => {
         e.preventDefault();
-        console.log(userInfo, 'register')
-        alert('Account created successfully')
+        const { firstName, lastName, email, password, checkTerms } = userInfo;
+        dispatch({
+            type: 'REGISTER_USER', 
+            payload: {
+                firstName, 
+                lastName, 
+                email, 
+                password, 
+                checkTerms
+            }
+        });
+        alert('Account created successfully');
         navigate('/login');
     };
 

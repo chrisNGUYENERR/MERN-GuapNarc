@@ -176,6 +176,7 @@ export default function Login() {
 
     const handleLoginBtn = (e) => {
         e.preventDefault();
+        
         console.log(userInfo, 'login')
     };
 

@@ -4,7 +4,7 @@ export const registerMiddleware = (store) => {
             switch (action.type) {
                 case 'REGISTER_USER':
                     const { payload } = action;
-                    const { firstName, lastName, email, password, checkTerms } = payload;
+                    const { firstName, lastName, email, userId, checkTerms } = payload;
                     await fetch('http://localhost:1337/api/auth/register', {
                         method: 'POST',
                         headers: {
@@ -14,7 +14,7 @@ export const registerMiddleware = (store) => {
                             firstName: firstName,
                             lastName: lastName,
                             email: email,
-                            password: password,
+                            userId: userId,
                             checkTerms: checkTerms
                         })
                     })

@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { FaGoogle, FaFacebook, FaRegEye, FaRegEyeSlash } from "react-icons/fa";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth';
+import { firebaseAuth } from '../utils/firebase-config';
 
 
 const Container = styled.div`
@@ -146,6 +148,8 @@ const Button = styled.button`
 
 export default function Login() {
 
+    const navigate = useNavigate();
+
     const [userInfo, setUserInfo] = useState({
         email: '',
         password: ''
@@ -174,11 +178,29 @@ export default function Login() {
     
     const isBtnDisabled = isValidInfo;
 
-    const handleLoginBtn = (e) => {
+    const handleLoginBtn = async (e) => {
         e.preventDefault();
-        
-        console.log(userInfo, 'login')
+        try {
+            const { email, password } = userInfo;
+            await signInWithEmailAndPassword(firebaseAuth, email, password)
+                .then((userCredential) => {
+                    const user = userCredential.user
+                    console.log(user)
+                })
+        } catch (error) {
+            console.log(error)
+            alert('Sorry, invalid email and/or password!')
+        }
     };
+
+    useEffect(() => {
+        onAuthStateChanged(firebaseAuth, (user) => {
+            if (user) {
+                console.log('logged in: ', user)
+                navigate('/dashboard')
+            }
+        })
+    }, [navigate]);
 
   return (
     <Container>

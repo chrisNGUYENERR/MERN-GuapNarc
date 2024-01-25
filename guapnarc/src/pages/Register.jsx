@@ -5,6 +5,9 @@ import styled from 'styled-components';
 import { FaFacebook, FaGoogle, FaRegEye, FaRegEyeSlash, FaCheck } from 'react-icons/fa';
 import Modal from 'react-modal';
 import TermsAgreement from '../components/TermsAgreement';
+import { createUserWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
+import { db, firebaseAuth } from '../utils/firebase-config';
+import { collection, addDoc } from 'firebase/firestore';
 import '../styles.css';
 
 const Container = styled.div`
@@ -274,22 +277,39 @@ export default function Register() {
         });
     };
 
-    const handleRegisterBtn = (e) => {
-        e.preventDefault();
-        const { firstName, lastName, email, password, checkTerms } = userInfo;
-        dispatch({
-            type: 'REGISTER_USER', 
-            payload: {
-                firstName, 
-                lastName, 
-                email, 
-                password, 
-                checkTerms
-            }
-        });
-        alert('Account created successfully');
-        navigate('/login');
+    const handleRegisterBtn = async (e) => {
+        e.preventDefault();  
+        try {
+            const { firstName, lastName, email, password, checkTerms } = userInfo;
+            await createUserWithEmailAndPassword(firebaseAuth, email, password)
+                .then((userCredential) => {
+                    const userId = userCredential.user.uid
+                    dispatch({
+                        type: 'REGISTER_USER', 
+                        payload: {
+                                firstName, 
+                                lastName, 
+                                email, 
+                                userId,
+                                checkTerms,
+                                userId
+                            }
+                        });
+                })
+                alert('Account created successfully');
+            } catch (error) {
+            console.log(error)
+        };
     };
+    
+    useEffect(() => {
+        onAuthStateChanged(firebaseAuth, (user) => {
+            if (user) {
+                console.log('logged in: ', user)
+                navigate('/dashboard')
+            }
+        })
+    }, [navigate]);
 
     const revealPassword = (e) => {
         e.preventDefault();

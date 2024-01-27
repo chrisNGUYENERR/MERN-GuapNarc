@@ -4,6 +4,7 @@ import { FaGoogle, FaFacebook, FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { Link, useNavigate } from 'react-router-dom';
 import { onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth';
 import { firebaseAuth } from '../utils/firebase-config';
+import { useDispatch } from 'react-redux';
 
 
 const Container = styled.div`
@@ -148,6 +149,7 @@ const Button = styled.button`
 
 export default function Login() {
 
+    const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const [userInfo, setUserInfo] = useState({
@@ -184,9 +186,12 @@ export default function Login() {
             const { email, password } = userInfo;
             await signInWithEmailAndPassword(firebaseAuth, email, password)
                 .then((userCredential) => {
-                    const user = userCredential.user
-                    console.log(user)
-                })
+                    const userId = userCredential.user.uid
+                    dispatch({
+                        type: 'FETCH_USER',
+                        payload: { userId }
+                    });
+                });
         } catch (error) {
             console.log(error)
             alert('Sorry, invalid email and/or password!')
@@ -197,7 +202,7 @@ export default function Login() {
         onAuthStateChanged(firebaseAuth, (user) => {
             if (user) {
                 console.log('logged in: ', user)
-                navigate('/dashboard')
+                navigate('/expensetracker')
             }
         })
     }, [navigate]);

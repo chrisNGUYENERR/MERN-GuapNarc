@@ -1,7 +1,7 @@
 const initialState = {
     firstName: '',
     lastName: '',
-    email: '',
+    userId: '',
     budget: 0,
     itemList: [],
 }

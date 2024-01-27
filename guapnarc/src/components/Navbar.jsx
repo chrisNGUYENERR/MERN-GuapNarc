@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { FaUser } from "react-icons/fa";
 import { FaSackDollar } from "react-icons/fa6";
@@ -20,8 +21,10 @@ const Container = styled.div`
         gap: 0.5rem;
     }
 `;
+function Navbar(props) {
 
-export default function Navbar() {
+    const { firstName, lastName } = props.stateData;
+
   return (
     <Container>
         <div className="logo">
@@ -30,8 +33,15 @@ export default function Navbar() {
         </div>
         <div className="userInfo">
             <FaUser />
-            Chris Nguyen
+            {firstName} {lastName}
         </div>
     </Container>
   )
 }
+
+const mapStatesToProps = (state) => {
+    const stateData = state;
+    return { stateData };
+};
+
+export default connect(mapStatesToProps, null)(Navbar);

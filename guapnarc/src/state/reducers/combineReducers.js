@@ -23,6 +23,15 @@ const combineReducers = (state = initialState, action) => {
                 ...state,
                 budget: state.budget - payload
             };
+        case 'SET_USER_DATA':
+            const { firstName, lastName, userId, itemList } = payload;
+            return {
+                ...state,
+                firstName: firstName,
+                lastName: lastName,
+                userId: userId,
+                itemList: itemList
+            };
         default:
             return state;
     }

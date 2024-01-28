@@ -6,8 +6,7 @@ import { FaFacebook, FaGoogle, FaRegEye, FaRegEyeSlash, FaCheck } from 'react-ic
 import Modal from 'react-modal';
 import TermsAgreement from '../components/TermsAgreement';
 import { createUserWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
-import { db, firebaseAuth } from '../utils/firebase-config';
-import { collection, addDoc } from 'firebase/firestore';
+import { firebaseAuth } from '../utils/firebase-config';
 import '../styles.css';
 
 const Container = styled.div`
@@ -292,7 +291,6 @@ export default function Register() {
                                 email, 
                                 userId,
                                 checkTerms,
-                                userId
                             }
                         });
                 })
